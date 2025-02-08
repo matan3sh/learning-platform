@@ -9,6 +9,7 @@ import Providers from '@/components/providers'
 
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
+import './prosemirror.css'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
