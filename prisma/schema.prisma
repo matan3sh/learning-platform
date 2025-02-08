@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String  @id @default(cuid())
+  email            String  @unique
+  clerkUserId      String  @unique
+  stripeCustomerId String? @unique
+
+  firstName   String?
+  lastName    String?
+  imageUrl    String?
+  bio         String?
+  website     String?
+  xUrl        String?
+  githubUrl   String?
+  linkedInUrl String?
+
+  teachingCourses Course[] @relation("TeachingCourses")
+  learningCourses Course[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Course {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String?
+  price       Float
+  isPublished Boolean @default(false)
+
+  teacherId String
+  teacher   User   @relation("TeachingCourses", fields: [teacherId], references: [clerkUserId])
+
+  tagId String
+  tag   Tag    @relation(fields: [tagId], references: [id])
+
+  students User[]
+  lessons  Lesson[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lesson {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String
+  content     String?
+  isPublished Boolean @default(false)
+  isFree      Boolean @default(false)
+
+  video Video?
+
+  courseSlug String
+  course     Course @relation(fields: [courseSlug], references: [slug], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([courseSlug, slug])
+}
+
+model Video {
+  id String @id @default(cuid())
+
+  status      String
+  assetId     String? @unique
+  playbackId  String? @unique
+  passthrough String  @unique
+  uploadId    String  @unique
+  teacherId   String
+  duration    Float?
+  aspectRatio String?
+
+  lessonId String @unique
+  lesson   Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tag {
+  id   String @id @default(cuid())
+  name String @unique
+
+  courses Course[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
