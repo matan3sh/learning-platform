@@ -19,7 +19,7 @@ import { ImageResizer, handleCommandNavigation } from 'novel/extensions'
 import { handleImageDrop, handleImagePaste } from 'novel/plugins'
 
 import EditorMenu from '@/components/editor/editor-menu'
-import { defaultExtensions } from '@/components/editor/extension'
+import { defaultExtensions } from '@/components/editor/extensions'
 import { uploadFn } from '@/components/editor/image-upload'
 import { ColorSelector } from '@/components/editor/selectors/color-selector'
 import { LinkSelector } from '@/components/editor/selectors/link-selector'
