@@ -22,7 +22,7 @@ import { PlusCircledIcon } from '@radix-ui/react-icons'
 import { EditorInstance } from 'novel'
 import { toast } from 'sonner'
 
-// import Editor from '@/components/editor/editor'
+import Editor from '@/components/editor/editor'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -322,7 +322,7 @@ export default function LessonContentForm({ lesson }: LessonContentFormProps) {
             <div className="rounded-t-md border bg-muted">
               <h3 className="p-4 text-sm font-medium">Lesson content</h3>
             </div>
-            {/* <Editor lesson={lesson} setEditor={setEditor} teacherView /> */}
+            <Editor lesson={lesson} setEditor={setEditor} teacherView />
           </div>
         </div>
       </form>
